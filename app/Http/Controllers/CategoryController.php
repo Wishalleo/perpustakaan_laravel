@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $dataKategori = Category::all();
+        return view('layouts.management.category',['dataKategori'=>$dataKategori]);
     }
 
     /**
@@ -24,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.management.form.add-category');
     }
 
     /**
@@ -35,7 +36,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create([
+            'name'=>$request->name
+        ]);
+        return redirect('category');
     }
 
     /**
@@ -55,9 +59,10 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit($id)
     {
-        //
+        $editKategori = Category::findOrFail($id);
+        return view('layouts.management.form.update-category',['editKategori'=>$editKategori]);
     }
 
     /**
@@ -67,9 +72,13 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $updateKategori = Category::findOrFail($id);
+        $updateKategori->update([
+            'name' => $request->name
+        ]);
+        return redirect('category');
     }
 
     /**
@@ -78,8 +87,10 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy($id)
     {
-        //
+        $deleteKategori = Category::findOrFail($id);
+        $deleteKategori->delete();
+        return redirect()->back()->with('message','Delete successfully');
     }
 }

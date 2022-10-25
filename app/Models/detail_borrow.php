@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class detail_borrow extends Model
+class Detail_Borrow extends Model
 {
     use HasFactory;
 }

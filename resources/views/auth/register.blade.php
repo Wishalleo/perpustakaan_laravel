@@ -1,64 +1,79 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/auth.css') }}">
+    <title>Register - e-book</title>
+    <style>
+        * {
+            overflow: hidden;
+        }
+    </style>
+</head>
 
-            <!-- Name -->
-            <div>
-                <x-input-label for="name" :value="__('Name')" />
+<body>
+    <div id="auth">
 
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+        <div class="row h-100">
+            <div class="col-lg-5 col-12">
+                <div id="auth-left " class="p-5 p-5 p-5">
 
-                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    <h2 class="auth-title">Daftar Akun</h2>
+                    <p class="auth-subtitle mb-3">terlebih dahulu supaya bisa menggunakan aplikasi e-book</p>
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" name="email"
+                                placeholder="Email">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" name="name"
+                                placeholder="Nama Lengkap">
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" name="password"
+                                placeholder="Password">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-1">
+                            <input type="password" class="form-control form-control-xl" name="password_confirmation"
+                                placeholder="Konfirmasi Password">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Daftar</button>
+                    </form>
+                    <div class="text-center mt-3 text-lg fs-4">
+                        <p class='text-gray-600'>Sudah mempunyai akun ? <a href="{{ route('login') }}"
+                                class="font-bold">Log
+                                in</a>.</p>
+                    </div>
+                </div>
             </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-input-label for="email" :value="__('Email')" />
-
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <div class="col-lg-7 d-none d-lg-block">
+                <div id="auth-right">
+                    <div id="auth-right">
+                        <img style="background-size: cover; background-position: center; width: 100%;"
+                            src="{{ asset('assets/auth/auth-hero.png') }}" alt="">
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" />
+    </div>
+</body>
 
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-primary-button class="ml-4">
-                    {{ __('Register') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+</html>
