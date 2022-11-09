@@ -17,11 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('title');
-            $table->string('cover');
+            $table->string('cover')->nullable();
             $table->string('writer');
+            $table->integer('being_borrowed');          
             $table->integer('stock');
-            $table->integer('yang dipinjam');
-            $table->integer('sisa buku');
             $table->integer('price');
             $table->timestamps();
         });

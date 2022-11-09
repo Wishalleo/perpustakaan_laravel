@@ -9,5 +9,4 @@ class Book extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $nullable = 'cover';
 }

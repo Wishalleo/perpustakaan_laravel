@@ -41,7 +41,8 @@ class BookController extends Controller
             'title' => $request->title,
             'cover' => '',
             'writer' => $request->writer,
-            'status' => '0',
+            'stock' => $request->stock,
+            'being_borrowed' => '0',
             'price' => $request->price
         ]);
         return redirect('book');
@@ -84,6 +85,7 @@ class BookController extends Controller
             'code' => $request->code,
             'title' => $request->title,            
             'writer' => $request->writer,
+            'stock' => $request->stock,
             'price' => $request->price
         ]);
         return redirect('book');
