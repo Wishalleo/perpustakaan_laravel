@@ -51,14 +51,14 @@
                 </li>
 
 
-                <li class="sidebar-item has-sub {{ Request::is('stock') ? 'active' : '' }}{{ Request::is('item-categories') ? 'active' : '' }}">
+                <li class="sidebar-item has-sub {{ Request::is('book') ? 'active' : '' }}{{ Request::is('category') ? 'active' : '' }}">
                     <a href="" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Manajemen</span>
                     </a>
                     <ul class="submenu ">
                         <li class="submenu-item">
-                            <a href="{{ route('stock-book') }}">Stok Buku</a>
+                            <a href="{{ route('book') }}">Stok Buku</a>
                         </li>
                         <li class="submenu-item">
                             <a href="{{ route('category') }}">Kategori Buku</a>
@@ -66,10 +66,10 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item">
-                    <a href="" class='sidebar-link'>
+                <li class="sidebar-item {{ Request::is('borrow') ? 'active' : '' }}">
+                    <a href="{{ route('borrow') }}" class='sidebar-link'>
                         <i class="bi bi-cart-fill"></i>
-                        <span>Kasir</span>
+                        <span>Pinjam</span>
                     </a>
                 </li>
                 <li class="sidebar-item  has-sub">

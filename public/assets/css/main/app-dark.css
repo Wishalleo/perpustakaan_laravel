@@ -9605,8 +9605,8 @@ body.theme-dark .was-validated :invalid~.invalid-tooltip {
     display: block
 }
 
-.swal2-success-fix,
-.swal2-success-circular-line-left,
-.swal2-success-circular-line-right{
+.theme-dark .swal2-success-fix,
+.theme-dark .swal2-success-circular-line-left,
+.theme-dark .swal2-success-circular-line-right{
     background-color: #1e1e2d !important;
 }

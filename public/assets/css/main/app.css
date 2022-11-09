@@ -22334,3 +22334,9 @@ a {
 .z-1 {
     z-index: 1
 }
+
+.theme-dark .swal2-success-fix,
+.theme-dark .swal2-success-circular-line-left,
+.theme-dark .swal2-success-circular-line-right{
+    background-color: #fff !important;
+}

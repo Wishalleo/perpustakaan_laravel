@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('code_borrow');
             $table->string('operator');
             $table->string('status');
-            $table->string('forfeit');
+            $table->string('forfeit')->nullable();
             $table->date('borrow_date');
-            $table->date('return_date');
-            $table->date('date_of_return');
+            $table->date('return_date')->nullable();
+            $table->date('date_of_return')->nullable();
             $table->timestamps();
         });
     }

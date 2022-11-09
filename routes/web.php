@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,13 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
-    Route::get('stock-book',[BookController::class,'index'])->name('stock-book');
+    
+    Route::get('book',[BookController::class,'index'])->name('book');
+    Route::get('add-book',[BookController::class,'create'])->name('add-book');
+    Route::post('add-book',[BookController::class,'store'])->name('add-book');
+    Route::get('update-book/{id}',[BookController::class,'edit'])->name('update-book');
+    Route::post('update-book/{id}',[BookController::class,'update'])->name('update-book');
+    Route::get('delete-book/{id}',[BookController::class,'destroy'])->name('delete-book');
     
     Route::get('category',[CategoryController::class,'index'])->name('category');
     Route::get('add-category',[CategoryController::class,'create'])->name('add-category');
@@ -30,6 +37,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('update-category/{id}',[CategoryController::class,'edit'])->name('update-category');
     Route::post('update-category/{id}',[CategoryController::class,'update'])->name('update-category');
     Route::get('delete-category/{id}',[CategoryController::class,'destroy'])->name('delete-category');
+
+    Route::get('borrow',[BorrowController::class,'index'])->name('borrow');
+    Route::get('cart',[BorrowController::class,'cart'])->name('cart');
+    Route::get('add-cart',[BorrowController::class,'addCart'])->name('add-cart');
+    Route::post('add-borrow',[BorrowController::class,'addBorrow'])->name('add-borrow');
 });
 
 require __DIR__.'/auth.php';

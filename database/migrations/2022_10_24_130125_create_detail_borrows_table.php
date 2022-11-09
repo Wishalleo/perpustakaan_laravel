@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('detail_borrows', function (Blueprint $table) {
             $table->id();
             $table->string('code_borrow');
-            $table->foreignId('book_id')->constrained('books');
+            $table->string('code_book');
             $table->timestamps();
         });
     }
