@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detail_borrow;
+use App\Models\Detail_Borrow;
 use Illuminate\Http\Request;
 
 class DetailBorrowController extends Controller
@@ -41,10 +41,10 @@ class DetailBorrowController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\detail_borrow  $detail_borrow
+     * @param  \App\Models\Detail_Borrow  $detail_Borrow
      * @return \Illuminate\Http\Response
      */
-    public function show(detail_borrow $detail_borrow)
+    public function show(Detail_Borrow $detail_Borrow)
     {
         //
     }
@@ -52,10 +52,10 @@ class DetailBorrowController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\detail_borrow  $detail_borrow
+     * @param  \App\Models\Detail_Borrow  $detail_Borrow
      * @return \Illuminate\Http\Response
      */
-    public function edit(detail_borrow $detail_borrow)
+    public function edit(Detail_Borrow $detail_Borrow)
     {
         //
     }
@@ -64,10 +64,10 @@ class DetailBorrowController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\detail_borrow  $detail_borrow
+     * @param  \App\Models\Detail_Borrow  $detail_Borrow
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, detail_borrow $detail_borrow)
+    public function update(Request $request, Detail_Borrow $detail_Borrow)
     {
         //
     }
@@ -75,10 +75,10 @@ class DetailBorrowController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\detail_borrow  $detail_borrow
+     * @param  \App\Models\Detail_Borrow  $detail_Borrow
      * @return \Illuminate\Http\Response
      */
-    public function destroy(detail_borrow $detail_borrow)
+    public function destroy(Detail_Borrow $detail_Borrow)
     {
         //
     }

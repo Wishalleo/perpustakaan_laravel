@@ -27,6 +27,16 @@ class UserSeeder extends Seeder
         // Pegawai
         $user = User::create([
             'name' => 'Firdaus Waridil Wishal',
+            'email' => 'guard@gmail.com',
+            'gender'=>'l',
+            'password' => bcrypt('1')
+        ]);
+        // $user->assignRole('Pegawai');
+
+        // Anggota
+        $user = User::create([
+            'code' => 'agt-1-rpl1-2005',
+            'name' => 'Ahmad Farizky',
             'email' => 'student@gmail.com',
             'gender'=>'l',
             'password' => bcrypt('1')

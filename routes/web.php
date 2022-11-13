@@ -40,7 +40,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('borrow',[BorrowController::class,'index'])->name('borrow');
     Route::get('cart',[BorrowController::class,'cart'])->name('cart');
-    Route::get('add-cart',[BorrowController::class,'addCart'])->name('add-cart');
+    Route::post('check-member',[BorrowController::class,'checkMember'])->name('check-member');
+    Route::post('add-cart',[BorrowController::class,'addCart'])->name('add-cart');
     Route::post('add-borrow',[BorrowController::class,'addBorrow'])->name('add-borrow');
 });
 

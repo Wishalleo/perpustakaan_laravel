@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('code_borrow');
             $table->string('operator');
+            $table->string('code_user')->nullable();
             $table->string('status');
             $table->string('forfeit')->nullable();
             $table->date('borrow_date');

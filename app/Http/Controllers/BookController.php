@@ -41,7 +41,7 @@ class BookController extends Controller
             'title' => $request->title,
             'cover' => '',
             'writer' => $request->writer,
-            'stock' => $request->stock,
+            'stock' => 1,
             'being_borrowed' => '0',
             'price' => $request->price
         ]);
