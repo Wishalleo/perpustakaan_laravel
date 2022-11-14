@@ -40,15 +40,15 @@
         <div class="row">
             <div class="col-6 order-md-1">
                 <div class="m-0 pt-2 ">
-                    <h3 class="m-0 p-0 text-white">Kasir</h3>
-                    <p class="text-white-50">Aplikasi transaksi barang</p>
+                    <h3 class="m-0 p-0 text-white">Pinjam</h3>
+                    <p class="text-white-50">Aplikasi meminjam buku</p>
                 </div>
             </div>
             <div class="mt-3 col-6 order-md-2">
                 <nav class="breadcrumb-header float-end" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="text-white-50 breadcrumb-item active">Dashboard</li>
-                        <li class="breadcrumb-item"><a class="text-white" href="stock">Kasir</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="stock">Pinjam</a></li>
                     </ol>
                 </nav>
             </div>
@@ -89,8 +89,7 @@
                             <hr>
                             <div class="col-lg-12">                            
                                 @forelse ($isi as $isi)
-                                    <form action="{{ route('add-cart') }}" method="POST">
-                                        @csrf
+                                    
                                         <div class="form-group row">
                                             <label for="kembali" class="col-lg-2 control-label">Kode Buku</label>
                                             <div class="col-lg-8 pe-0">
@@ -98,12 +97,15 @@
                                                     id="code" class="form-control" readonly>
                                             </div>
                                             <div class="col-lg-2">
-                                                <button type="submit" class="btn btn-danger block ms-1">
+                                                <a href="{{ route('delete-cart', ['id' => $isi->id]) }}" class="btn btn-danger block ms-1">
                                                     Hapus Judul
-                                                </button>
+                                                </a>
+                                                {{-- <button type="submit" class="btn btn-danger block ms-1">
+                                                    
+                                                </button> --}}
                                             </div>
                                         </div>
-                                    </form>
+                                    
                                     <form action="{{ route('add-borrow') }}" method="POST">
                                         @csrf
                                         <div class="form-group row">
@@ -135,8 +137,15 @@
                                         <div class="form-group row">
                                             <label for="kembali" class="col-lg-2 control-label">Kode Buku</label>
                                             <div class="col-lg-8 pe-0">
+                                                @forelse ($kodePeminjam as $kodePeminjam)
+                                                <input type="text" name="code_user" id="code_user"
+                                                    class="form-control" value="{{ $kodePeminjam->code_user }}" hidden>                                                    
+                                                <input type="text" name="code" id="code"
+                                                    class="form-control" autofocus required>                                                    
+                                                @empty                                                    
                                                 <input type="text" name="code" id="code"
                                                     class="form-control" required>
+                                                @endforelse
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="submit" class="btn btn-secondary block ms-lg-4">

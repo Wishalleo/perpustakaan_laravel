@@ -40,6 +40,9 @@ class BorrowController extends Controller
     public function cart(Request $request)
     {
         $struk = $request->session()->get('code_borrow');
+        $kodePeminjam = Borrow::where('code_borrow', $struk)
+            ->select('code_user')
+            ->get();
         $peminjam = Borrow::query()
             ->join('users', 'borrows.code_user', '=', 'users.code')
             ->select('users.name')
@@ -48,17 +51,17 @@ class BorrowController extends Controller
         $isi = Detail_Borrow::query()
             ->join('books', 'detail_borrows.code_book', '=', 'books.code')
             ->join('borrows', 'detail_borrows.code_borrow', '=', 'borrows.code_borrow')
-            ->select('detail_borrows.code_book as code', 'books.title','borrows.code_user')
+            ->select('detail_borrows.code_book as code', 'books.title', 'borrows.code_user', 'detail_borrows.id')
             ->where('detail_borrows.code_borrow', $struk)
             ->get();
         // return $isi;
-        return view('layouts.borrow.my-borrow', ['isi' => $isi,'peminjam' =>$peminjam]);
+        return view('layouts.borrow.my-borrow', ['isi' => $isi, 'peminjam' => $peminjam, 'kodePeminjam' => $kodePeminjam]);
     }
 
     public function checkMember(Request $request)
     {
-        // return User::where('code', $request->code)->get();        
-        $inputKode = Borrow::where('code_borrow', $request->session()->get('code_borrow'))
+        $struk = $request->session()->get('code_borrow');    
+        $inputKode = Borrow::where('code_borrow', $struk)
             ->update([
                 'code_user' => $request->code
             ]);
@@ -67,33 +70,43 @@ class BorrowController extends Controller
 
     public function addCart(Request $request)
     {
-        $cekMember = Borrow::where('code_borrow',$request->session()->get('code_borrow'))->where('code_user',$request->code)->count();
-        if($cekMember>0){
+        $struk = $request->session()->get('code_borrow');
+        $cekMember = Borrow::query()
+            ->join('detail_borrows', 'borrows.code_borrow', '=', 'detail_borrows.code_borrow')
+            ->where('detail_borrows.code_book', $request->code)
+            ->where('borrows.code_user', $request->code_user)
+            ->where('borrows.status', 0)
+            ->count();
+        if ($cekMember > 0 || $request->code_user == 0) {
+            return redirect('cart');
+        } else {
             $tambahBuku = Detail_Borrow::create([
-                'code_borrow' => $request->session()->get('code_borrow'),
+                'code_borrow' => $struk,
                 'code_book' => $request->code,
             ]);
+            $isiTanggal = Borrow::where('code_borrow', $struk)
+                ->update([
+                    'return_date' => Carbon::today()->addDays(7)
+                ]);
             return redirect('cart');
         }
-        return redirect('cart');
     }
 
-    public function deleteCart(Request $request)
+    public function deleteCart($id)
     {
-        //
+        $deleteBukuPinjam = Detail_Borrow::findOrFail($id);
+        $deleteBukuPinjam->delete();
+        return redirect()->back();
     }
 
     public function addBorrow(Request $request)
     {
+        $struk = $request->session()->get('code_borrow');
         $tgl_kembali = Carbon::today()->addDays($request->return_date);
-        $updatePinjam = Borrow::where('code_borrow', $request->session()->get('code_borrow'))
+        $updatePinjam = Borrow::where('code_borrow', $struk)
             ->update([
                 'return_date' => $tgl_kembali
             ]);
-        $updateBuku = Book::where('code', $request->code)
-        ->update([
-            'status'=>1
-        ]);
         return view('dashboard');
     }
 }
