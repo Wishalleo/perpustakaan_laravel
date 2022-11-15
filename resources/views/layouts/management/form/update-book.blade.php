@@ -23,7 +23,7 @@
                 </div>
             </div>
             <section class="section">
-                <form action="{{ route('update-book',['id'=>$editBuku->id]) }}" method="POST">
+                <form action="{{ route('update-book', ['id' => $editBuku->id]) }}" method="POST">
                     <div style="border-bottom: 2px solid; border-radius: 4px;" class="card border-primary">
                         <div class="card-body">
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -47,13 +47,25 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nameLead">Kode Buku</label>
-                                    <input type="text" name="code" class="form-control" placeholder="Kode" value="{{ $editBuku->code }}">
-                                </div>                               
-                                    <div class="form-group">
-                                        <label for="nameLead">Harga Buku</label>
-                                        <input type="number" name="price" class="form-control" placeholder="10000" value="{{ $editBuku->price }}"
-                                            required>
-                                    </div>                                
+                                    <input type="text" name="code" class="form-control" placeholder="Kode"
+                                        value="{{ $editBuku->code }}">
+                                </div>
+                                <div class="row p-0 m-0">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="nameLead">Harga Buku</label>
+                                            <input type="number" name="price" class="form-control"
+                                                placeholder="10000" value="{{ $editBuku->price }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="nameLead">Stok Buku</label>
+                                            <input type="number" name="stock" class="form-control" value="{{ $editBuku->stock }}"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="px-2 d-flex justify-content-end">
                                     <button class="btn btn-primary w-auto" type="submit">Ubah Buku</button>

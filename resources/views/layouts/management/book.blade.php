@@ -39,7 +39,8 @@
                                     <th>Kode</th>
                                     <th>Judul</th>
                                     <th>Penulis</th>
-                                    <th>Status</th>
+                                    <th>Dipinjam</th>
+                                    <th>Stok</th>
                                     <th>Harga</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
@@ -51,12 +52,9 @@
                                         <td>{{ $buku->code }}</td>
                                         <td>{{ $buku->title }}</td>
                                         <td>{{ $buku->writer }}</td>
-                                        @if ($buku->status == 0)
-                                        <td>Siap Dipinjam</td>                                            
-                                        @else
-                                        <td>Sedang Dipinjam</td>                                                                                
-                                        @endif
-                                        <td>{{ $buku->price }}</td>
+                                        <td>{{ $buku->being_borrowed }}</td>
+                                        <td>{{ $buku->stock }}</td>
+                                        <td>@rupiah($buku->price)</td>
                                         <td class="text-center">
                                             <a href="{{ route('update-book', ['id' => $buku->id]) }}"
                                                 class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></a>

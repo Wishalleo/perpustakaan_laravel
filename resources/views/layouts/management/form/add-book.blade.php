@@ -32,29 +32,58 @@
                                 <div class="row p-0 m-0">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="nameLead">Nama Buku</label>
+                                            <label for="name">Nama Buku</label>
                                             <input type="text" name="title" class="form-control"
-                                                placeholder="Nama*">
+                                                placeholder="Nama*" required>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="nameLead">Penulis Buku</label>
+                                            <label for="writter">Penulis Buku</label>
                                             <input type="text" name="writer" class="form-control"
-                                                placeholder="Penulis*">
+                                                placeholder="Penulis*" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nameLead">Kode Buku</label>
-                                    <input type="text" name="code" class="form-control" placeholder="Kode">
-                                </div>                               
-                                    <div class="form-group">
-                                        <label for="nameLead">Harga Buku</label>
-                                        <input type="number" name="price" class="form-control" placeholder="10000"
-                                            required>
-                                    </div>                                
-
+                                    <label for="code">Kode Buku</label>
+                                    <input type="text" name="code" class="form-control" placeholder="Kode" required>
+                                </div>
+                                <div class="row p-0 m-0">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="price">Harga Buku</label>
+                                            <input type="number" name="price" class="form-control"
+                                                placeholder="Harga (10000)" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="stock">Stok Buku</label>
+                                            <input type="number" name="stock" class="form-control" placeholder="Stok (angka)"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row p-0 m-0">
+                                    <div class="col-lg-11 col-10 pe-lg-0">
+                                        <label for="categorySelect">Kategori</label>
+                                        <select class="form-select" name="category_id" id="categorySelect" required>
+                                            @forelse ($dataKategori as $kategori)
+                                                <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
+                                            @empty
+                                                <option value="" required>Tidak Ada Kategori</option>
+                                            @endforelse
+                                        </select>
+                                        <p>
+                                            <small class="text-muted">Nama kategori pilihan kamu.</small>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-1 col-2 ps-lg-4 ps-2">
+                                        <a href="{{ route('add-category') }}" class="btn btn-success btn-md mt-4"><i
+                                                class="bi bi-plus-circle"></i></a>
+                                    </div>
+                                </div>
                                 <div class="px-2 d-flex justify-content-end">
                                     <button class="btn btn-primary w-auto" type="submit">Tambah Buku</button>
                                 </div>

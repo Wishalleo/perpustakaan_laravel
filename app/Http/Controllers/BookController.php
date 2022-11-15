@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -25,7 +26,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('layouts.management.form.add-book');
+        $dataKategori = Category::all();
+        return view('layouts.management.form.add-book', ['dataKategori' => $dataKategori]);
     }
 
     /**
@@ -37,12 +39,13 @@ class BookController extends Controller
     public function store(Request $request)
     {
         Book::create([
+            'category_id' => $request->category_id,
             'code' => $request->code,
             'title' => $request->title,
             'cover' => '',
             'writer' => $request->writer,
-            'stock' => 1,
-            'being_borrowed' => '0',
+            'stock' => $request->stock,
+            'being_borrowed' => 0,
             'price' => $request->price
         ]);
         return redirect('book');
