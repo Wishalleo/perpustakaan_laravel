@@ -62,15 +62,14 @@ class BorrowController extends Controller
     {
         $struk = $request->session()->get('code_borrow');
         $cekAnggota = User::where('code', $request->code)->count();
-        if ($cekAnggota > 1) {
+        if ($cekAnggota > 0) {
             $inputKode = Borrow::where('code_borrow', $struk)
                 ->update([
                     'code_user' => $request->code
                 ]);
-                return redirect()->back();
+            return redirect()->back();
         } else {
             return redirect()->back()->with('message', 'User Not Found');
-            // return redirect('cart');
         }
     }
 
@@ -83,24 +82,38 @@ class BorrowController extends Controller
             ->where('borrows.code_user', $request->code_user)
             ->where('borrows.status', 0)
             ->count();
-        if ($cekMember > 0 || $request->code_user == 0) {
-            return redirect('cart');
+        $cekBuku = Book::where('code', $request->code)->count();
+        if ($cekBuku > 0 && $request->code_user == null) {
+            return redirect()->back()->with('user', 'User Empty');
+        } else if ($cekBuku == 0) {
+            return redirect()->back()->with('message', 'Not Found');
+        } else if ($cekMember > 0 || $request->code_user == 0) {
+            return redirect()->back()->with('use', 'book is in use');
         } else {
             $tambahBuku = Detail_Borrow::create([
                 'code_borrow' => $struk,
                 'code_book' => $request->code,
             ]);
+            $sedangDipinjam = Book::where('code', $request->code)->select('being_borrowed')->get();
+            $sd = $sedangDipinjam[0]->being_borrowed + 1;
+            $kurangiDipinjam = Book::where('code', $request->code)->select('being_borrowed')->update(['being_borrowed' => $sd]);
             $isiTanggal = Borrow::where('code_borrow', $struk)
                 ->update([
                     'return_date' => Carbon::today()->addDays(7)
                 ]);
-            return redirect('cart');
+            return redirect()->back();
         }
     }
 
     public function deleteCart($id)
     {
         $deleteBukuPinjam = Detail_Borrow::findOrFail($id);
+        $code_book = Detail_Borrow::findOrFail($id)
+            ->select('code_book')
+            ->get();
+        $sedangDipinjam = Book::where('code', $code_book[0]->code_book)->select('being_borrowed')->get();
+        $sd = $sedangDipinjam[0]->being_borrowed - 1;
+        $kurangiDipinjam = Book::where('code', $code_book[0]->code_book)->select('being_borrowed')->update(['being_borrowed' => $sd]);
         $deleteBukuPinjam->delete();
         return redirect()->back();
     }

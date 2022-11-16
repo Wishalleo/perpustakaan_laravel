@@ -23,7 +23,7 @@
                 </div>
             </div>
             <section class="section">
-                <form action="{{ route('update-category',['id'=>$editKategori->id]) }}" method="POST">
+                <form action="{{ route('update-category', ['id' => $editKategori->id]) }}" method="POST">
                     <div style="border-bottom: 2px solid; border-radius: 4px;" class="card border-primary">
                         <div class="card-body">
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -31,7 +31,8 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="nameLead">Nama Kategori</label>
-                                    <input type="text" name="name" class="form-control" id="nameLead" value="{{ $editKategori->name }}">
+                                    <input type="text" name="name" class="form-control" id="nameLead"
+                                        value="{{ $editKategori->name }}">
                                 </div>
 
                                 <div class="px-2 d-flex justify-content-end">

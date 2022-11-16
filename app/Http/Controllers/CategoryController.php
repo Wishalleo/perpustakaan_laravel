@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $dataKategori = Category::all();
-        return view('layouts.management.category',['dataKategori'=>$dataKategori]);
+        return view('layouts.management.category', ['dataKategori' => $dataKategori]);
     }
 
     /**
@@ -37,7 +37,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         Category::create([
-            'name'=>$request->name
+            'name' => $request->name
         ]);
         return redirect('category');
     }
@@ -62,7 +62,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $editKategori = Category::findOrFail($id);
-        return view('layouts.management.form.update-category',['editKategori'=>$editKategori]);
+        return view('layouts.management.form.update-category', ['editKategori' => $editKategori]);
     }
 
     /**
@@ -91,6 +91,6 @@ class CategoryController extends Controller
     {
         $deleteKategori = Category::findOrFail($id);
         $deleteKategori->delete();
-        return redirect()->back()->with('message','Delete successfully');
+        return redirect()->back()->with('message', 'Delete successfully');
     }
 }

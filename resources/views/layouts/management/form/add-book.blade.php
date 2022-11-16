@@ -47,7 +47,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="code">Kode Buku</label>
-                                    <input type="text" name="code" class="form-control" placeholder="Kode" required>
+                                    <input type="text" name="code" class="form-control" placeholder="Kode"
+                                        required>
                                 </div>
                                 <div class="row p-0 m-0">
                                     <div class="col-sm-12 col-md-6">
@@ -60,8 +61,8 @@
                                     <div class="col-sm-12 col-md-6">
                                         <div class="form-group">
                                             <label for="stock">Stok Buku</label>
-                                            <input type="number" name="stock" class="form-control" placeholder="Stok (angka)"
-                                                required>
+                                            <input type="number" name="stock" class="form-control"
+                                                placeholder="Stok (angka)" required>
                                         </div>
                                     </div>
                                 </div>

@@ -86,7 +86,7 @@ class BookController extends Controller
         $updateBuku = Book::findOrFail($id);
         $updateBuku->update([
             'code' => $request->code,
-            'title' => $request->title,            
+            'title' => $request->title,
             'writer' => $request->writer,
             'stock' => $request->stock,
             'price' => $request->price

@@ -61,8 +61,8 @@
                                     <div class="col-sm-12 col-md-6">
                                         <div class="form-group">
                                             <label for="nameLead">Stok Buku</label>
-                                            <input type="number" name="stock" class="form-control" value="{{ $editBuku->stock }}"
-                                                required>
+                                            <input type="number" name="stock" class="form-control"
+                                                value="{{ $editBuku->stock }}" required>
                                         </div>
                                     </div>
                                 </div>

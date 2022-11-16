@@ -32,7 +32,7 @@
                                 <div class="form-group">
                                     <label for="nameLead">Nama Kategori</label>
                                     <input type="text" name="name" class="form-control" id="nameLead"
-                                        placeholder="Nama*" >
+                                        placeholder="Nama*">
                                 </div>
 
                                 <div class="px-2 d-flex justify-content-end">
