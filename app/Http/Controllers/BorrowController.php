@@ -60,12 +60,18 @@ class BorrowController extends Controller
 
     public function checkMember(Request $request)
     {
-        $struk = $request->session()->get('code_borrow');    
-        $inputKode = Borrow::where('code_borrow', $struk)
-            ->update([
-                'code_user' => $request->code
-            ]);
-        return redirect('cart');
+        $struk = $request->session()->get('code_borrow');
+        $cekAnggota = User::where('code', $request->code)->count();
+        if ($cekAnggota > 1) {
+            $inputKode = Borrow::where('code_borrow', $struk)
+                ->update([
+                    'code_user' => $request->code
+                ]);
+                return redirect()->back();
+        } else {
+            return redirect()->back()->with('message', 'User Not Found');
+            // return redirect('cart');
+        }
     }
 
     public function addCart(Request $request)

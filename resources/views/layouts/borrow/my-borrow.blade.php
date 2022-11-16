@@ -211,6 +211,63 @@
             $('#modal-produk').modal('show');
         }
     </script>
+    <x-html-script-layout>
+        <script>
+            let jquery_datatable = $("#table").DataTable();
+            $('.delete').click(function() {
+                var book_id = $(this).attr('data-id')
+                var book_name = $(this).attr('data-name')
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success ms-2',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Yakin?',
+                    html: "Kamu akan kehilangan <strong>DATA BUKU</strong> yang bernama " +
+                        book_name + "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Iya, Saya Yakin!',
+                    cancelButtonText: 'Tidak, Batalkan!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = "delete-book/" + book_id;
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Dibatalkan',
+                            'Data tidak jadi dihapus :)',
+                            'error'
+                        )
+                    }
+                })
+            });
+
+            @if (Session::has('message'))
+                {
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success ms-2',
+                            cancelButton: 'btn btn-danger'
+                        },
+                        buttonsStyling: false
+                    })
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Datamu berhasil dihapus!',
+                        'success'
+                    )
+                }
+            @endif
+        </script>
+    </x-html-script-layout>
 </body>
 
 </html>
