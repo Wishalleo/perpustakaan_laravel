@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('add-cart', [BorrowController::class, 'addCart'])->name('add-cart');
     Route::get('delete-cart/{id}', [BorrowController::class, 'deleteCart'])->name('delete-cart');
     Route::post('add-borrow', [BorrowController::class, 'addBorrow'])->name('add-borrow');
+    Route::get('print', [BorrowController::class, 'print'])->name('print');
+
+    Route::get('report', [ReportController::class,'index'])->name('report');
+    Route::get('check-forfeit/{code}', [ReportController::class,'checkForfeit'])->name('check-forfeit');
 });
 
 require __DIR__ . '/auth.php';

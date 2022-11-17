@@ -26,9 +26,9 @@ class BorrowController extends Controller
         // ->translatedFormat('d F Y')
         $data = Borrow::query()->where('operator', $opr)->count();
         $ke = $data + 1;
-        $code_borrow = $tgl . "/" . $opr . "/" . $ke;
+        $code_borrow = $tgl . "-" . $opr . "-" . $ke;
         Borrow::query()->create([
-            'code_borrow' => $code_borrow,
+            'code' => $code_borrow,
             'operator' => $opr,
             'status' => 0,
             'borrow_date' => $tgl_pinjam,
@@ -40,17 +40,17 @@ class BorrowController extends Controller
     public function cart(Request $request)
     {
         $struk = $request->session()->get('code_borrow');
-        $kodePeminjam = Borrow::where('code_borrow', $struk)
+        $kodePeminjam = Borrow::where('code', $struk)
             ->select('code_user')
             ->get();
         $peminjam = Borrow::query()
             ->join('users', 'borrows.code_user', '=', 'users.code')
             ->select('users.name')
-            ->where('borrows.code_borrow', $struk)
+            ->where('borrows.code', $struk)
             ->get();
         $isi = Detail_Borrow::query()
             ->join('books', 'detail_borrows.code_book', '=', 'books.code')
-            ->join('borrows', 'detail_borrows.code_borrow', '=', 'borrows.code_borrow')
+            ->join('borrows', 'detail_borrows.code_borrow', '=', 'borrows.code')
             ->select('detail_borrows.code_book as code', 'books.title', 'borrows.code_user', 'detail_borrows.id')
             ->where('detail_borrows.code_borrow', $struk)
             ->get();
@@ -63,7 +63,7 @@ class BorrowController extends Controller
         $struk = $request->session()->get('code_borrow');
         $cekAnggota = User::where('code', $request->code)->count();
         if ($cekAnggota > 0) {
-            $inputKode = Borrow::where('code_borrow', $struk)
+            $inputKode = Borrow::where('code', $struk)
                 ->update([
                     'code_user' => $request->code
                 ]);
@@ -77,7 +77,7 @@ class BorrowController extends Controller
     {
         $struk = $request->session()->get('code_borrow');
         $cekMember = Borrow::query()
-            ->join('detail_borrows', 'borrows.code_borrow', '=', 'detail_borrows.code_borrow')
+            ->join('detail_borrows', 'borrows.code', '=', 'detail_borrows.code_borrow')
             ->where('detail_borrows.code_book', $request->code)
             ->where('borrows.code_user', $request->code_user)
             ->where('borrows.status', 0)
@@ -97,7 +97,7 @@ class BorrowController extends Controller
             $sedangDipinjam = Book::where('code', $request->code)->select('being_borrowed')->get();
             $sd = $sedangDipinjam[0]->being_borrowed + 1;
             $kurangiDipinjam = Book::where('code', $request->code)->select('being_borrowed')->update(['being_borrowed' => $sd]);
-            $isiTanggal = Borrow::where('code_borrow', $struk)
+            $isiTanggal = Borrow::where('code', $struk)
                 ->update([
                     'return_date' => Carbon::today()->addDays(7)
                 ]);
@@ -122,10 +122,16 @@ class BorrowController extends Controller
     {
         $struk = $request->session()->get('code_borrow');
         $tgl_kembali = Carbon::today()->addDays($request->return_date);
-        $updatePinjam = Borrow::where('code_borrow', $struk)
+        $updatePinjam = Borrow::where('code', $struk)
             ->update([
                 'return_date' => $tgl_kembali
             ]);
-        return view('dashboard');
+        return redirect('print');
+    }
+
+    public function print(Request $request)
+    {
+        $struk = $request->session()->get('code_borrow');
+        return view('layouts.print');
     }
 }

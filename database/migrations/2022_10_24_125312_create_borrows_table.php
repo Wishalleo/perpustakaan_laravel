@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('borrows', function (Blueprint $table) {
             $table->id();
-            $table->string('code_borrow');
+            $table->string('code');
             $table->string('operator');
             $table->string('code_user')->nullable();
             $table->string('status');
