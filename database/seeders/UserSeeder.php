@@ -41,6 +41,13 @@ class UserSeeder extends Seeder
             'gender'=>'l',
             'password' => bcrypt('1')
         ]);
+        $user = User::create([
+            'code' => 'agt-2-rpl1-2005',
+            'name' => 'Muhammad Arifin',
+            'email' => 'student2@gmail.com',
+            'gender'=>'l',
+            'password' => bcrypt('1')
+        ]);
         // $user->assignRole('Pegawai');
     }
 }

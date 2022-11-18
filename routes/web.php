@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('report', [ReportController::class,'index'])->name('report');
     Route::get('check-forfeit/{code}', [ReportController::class,'checkForfeit'])->name('check-forfeit');
+    Route::get('done-forfeit/{code}', [ReportController::class,'doneForfeit'])->name('done-forfeit');
 });
 
 require __DIR__ . '/auth.php';

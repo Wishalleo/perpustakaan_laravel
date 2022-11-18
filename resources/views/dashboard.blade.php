@@ -4,7 +4,7 @@
         </x-slot>
         <x-sidebar-with-profile-layout></x-sidebar-with-profile-layout>
         <div id="main" class="pt-5 pt-xl-0 pt-lg-5 pt-md-5 pt-sm-5 px-3">
-            <div class="text-white h4">Selamat Datang di IraTani App, {{ Auth::user()->name }}</div>
+            <div class="text-white h4">Selamat Datang di E-Book, {{ Auth::user()->name }}</div>
             <section class="row">
                 <div class="col-12 col-lg-4">
                     <div class="py-2 my-0">

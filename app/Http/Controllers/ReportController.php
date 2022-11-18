@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Borrow;
+use App\Models\Detail_Borrow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -19,7 +21,7 @@ class ReportController extends Controller
         // return $dataTransaksi;
         return view('layouts.report.transaction-report', ['data' => $dataTransaksi, 'dataStruk' => []]);
     }
-    public function checkForfeit($code)
+    public function checkForfeit(Request $request, $code)
     {
         $cekDenda = Borrow::where('code', $code)->select('return_date')->get();
         // selisih
@@ -30,13 +32,25 @@ class ReportController extends Controller
         if ($hariIni > $tglPengembalian) {
             $selisihAngka = $selisih->d;
             $denda = 500 * $selisihAngka;
-            return redirect()->back()->with('forfeit', 'you are late');
+            $request->session()->put('forfeit', $denda);
+            return redirect()->back()->with('late', 'you are late');
         } else{            
-            return redirect()->back()->with('done', 'you discipline');
+            return redirect()->back()->with('discipline', 'you discipline');
         }
     }
-    public function submitBorrow()
+    public function doneForfeit($code)
     {
-        
+        $selesaikan = Borrow::where('code', $code)
+            ->update([
+                'status'=>1
+            ]);
+        $kodeBuku = Detail_Borrow::where('code_borrow', $code)
+            ->select('code_book')
+            ->get();
+        $kodeBuku[0]->code_book;
+        $sedangDipinjam = Book::where('code', $kodeBuku[0]->code_book)->select('being_borrowed')->get();
+        $sd = $sedangDipinjam[0]->being_borrowed - 1;
+        $kurangiDipinjam = Book::where('code', $kodeBuku[0]->code_book)->select('being_borrowed')->update(['being_borrowed' => $sd]);
+        return redirect()->back()->with('done', 'borrow solved');
     }
 }

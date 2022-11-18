@@ -55,28 +55,24 @@
                                                 @endif
                                                 <td>{{ $data->operator }}</td>
                                                 <td>{{ $data->return_date }}</td>
-                                                {{-- <td>
-                                                <form action="" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" value="{{ $data->code_borrow }}"
-                                                        name="code_borrow">
-                                                    <button type="submit" class="btn btn-danger btn-sm mx-auto d-block">
-                                                        <i class="bi bi-printer"></i>
-                                                    </button>
-                                                </form>
-                                                <a href="" class="btn btn-info btn-sm">
-                                                    <i class="bi bi-patch-question"></i>
-                                                </a>
-                                            </td> --}}
-                                                <td class="text-center">
-                                                    <a href="{{ route('check-forfeit', ['code' => $data->code]) }}"
-                                                        class="btn btn-warning btn-sm">
-                                                        <i class="bi bi-cash"></i>
-                                                    </a>
-                                                    <a href="#" class="btn btn-danger btn-sm">
-                                                        <i class="bi bi-printer"></i>
-                                                    </a>
-                                                </td>
+                                                @if ($data->status == 0)
+                                                    <td class="text-center">
+                                                        <a href="#" class="btn btn-warning btn-sm check"
+                                                            data-code="{{ $data->code }}"
+                                                            data-name="{{ $data->name }}">
+                                                            <i class="bi bi-cash"></i>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger btn-sm">
+                                                            <i class="bi bi-printer"></i>
+                                                        </a>
+                                                    </td>
+                                                @else
+                                                    <td class="text-center">                 
+                                                        <a href="#" class="btn btn-danger btn-sm">
+                                                            <i class="bi bi-printer"></i>
+                                                        </a>
+                                                    </td>
+                                                @endif                                                
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -91,26 +87,82 @@
         <x-html-script-layout>
             <script>
                 let jquery_datatable = $("#table").DataTable();
-                @if (Session::has('done'))
+                $('.check').click(function() {
+                    var borrow_code = $(this).attr('data-code')
+                    var borrow_name = $(this).attr('data-name')
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-primary',
+                            cancelButton: 'btn btn-secondary ms-2',
+                            denyButton: 'btn btn-danger ms-2'
+                        },
+                        buttonsStyling: false
+                    })
+
+                    swalWithBootstrapButtons.fire({
+                        title: 'Butuh Informasi?',
+                        icon: 'info',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Check Denda',
+                        denyButtonText: `Lunaskan`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            window.location = "check-forfeit/" + borrow_code;
+                        } else if (result.isDenied) {
+                            window.location = "done-forfeit/" + borrow_code;
+                        }
+                    })
+                });
+                @if (Session::has('discipline'))
                     {
                         const swalWithBootstrapButtons = Swal.mixin({
                             customClass: {
                                 confirmButton: 'btn btn-primary',
-                                cancelButton: 'btn btn-danger ms-2'
                             },
                             buttonsStyling: false
                         })
                         swalWithBootstrapButtons.fire({
-                            title: '<strong>Peminjam Yang Disiplin</strong>',
+                            title: '<strong>Tidak Telat Mengembalikan</strong>',
                             icon: 'info',
-                            html: 'Apakah kamu ingin menyelesaikan pinjaman ini?',
                             showCloseButton: true,
-                            showCancelButton: true,
                             focusConfirm: false,
-                            confirmButtonText: '<a href="//sweetalert2.github.io" class="text-white"><i class="bi bi-hand-thumbs-up-fill"></i> Selesaikan</a>',
-                            confirmButtonAriaLabel: 'Thumbs up, great!',
-                            cancelButtonText: '<i class="bi bi-hand-thumbs-down-fill"></i>',
-                            cancelButtonAriaLabel: 'Thumbs down'
+                            confirmButtonText: '<i class="bi bi-hand-thumbs-up-fill"></i> Oke</a>',
+                            confirmButtonAriaLabel: 'Thumbs up, great!'
+                        })
+                    }
+                @elseif (Session::has('late')) {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-primary',
+                            },
+                            buttonsStyling: false
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: '<strong>Telat Mengembalikan</strong>',
+                            icon: 'warning',
+                            text: "Dia telat, dan harus membayar Rp " + {{ Session::get('forfeit') }},
+                            showCloseButton: true,
+                            focusConfirm: false,
+                            confirmButtonText: '<i class="bi bi-hand-thumbs-up-fill"></i> Oke</a>',
+                            confirmButtonAriaLabel: 'Thumbs up, great!'
+                        })
+                    }
+                @elseif (Session::has('done')) {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-primary',
+                            },
+                            buttonsStyling: false
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: '<strong>Peminjaman Terselesaikan</strong>',
+                            icon: 'success',
+                            showCloseButton: true,
+                            focusConfirm: false,
+                            confirmButtonText: '<i class="bi bi-hand-thumbs-up-fill"></i> Oke</a>',
+                            confirmButtonAriaLabel: 'Thumbs up, great!'
                         })
                     }
                 @endif
